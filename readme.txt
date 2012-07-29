@@ -16,6 +16,8 @@ and enjoy a spam free website :)
 
 Simply install and activate the plugin. No settings necessary.
 
+For more information, visit the <a href="http://pixopoint.com/products/spam-destroyer/">Spam Destroyer plugin page</a>.
+
 
 == Frequently Asked Questions ==
 
@@ -32,6 +34,8 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 * Cleaned up some legacy code from older implementations
 = 1.0 (29/7/2012) =
 * Initial release
+
+<small>Any beta/alpha versions to be released in future, will be posted for download on the <a href="http://pixopoint.com/products/spam-destroyer/">Spam Destroyer plugin page</a>.</small>
 
 
 == Credits ==
