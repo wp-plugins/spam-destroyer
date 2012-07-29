@@ -4,8 +4,8 @@ Donate link: http://pixopoint.com/products/spam-destroyer/
 Tags: spam, kill, killer, antispam, antispam
 Requires at least: 3.4
 Stable tag: 1.0.3
-Description: Kills spam dead in it's tracks. Be gone evil demon spam!
 
+Kills spam dead in it's tracks. Be gone evil demon spam!
 
 == Description ==
 
