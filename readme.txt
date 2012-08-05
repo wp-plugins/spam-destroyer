@@ -1,10 +1,9 @@
 === Spam Destroyer ===
 Contributors: ryanhellyer
 Donate link: http://pixopoint.com/products/spam-destroyer/
-Tags: spam, kill, killer, antispam, antispam
-Requires at least: 3.4
+Tags: spam, kill, killer, antispam, antispam, buddypress
+Requires at least: WP 3.4, BuddyPress 1.5
 Stable tag: 1.1
-
 Kills spam dead in it's tracks. Be gone evil demon spam!
 
 
@@ -13,7 +12,7 @@ Kills spam dead in it's tracks. Be gone evil demon spam!
 Stops automated spam while remaining as unobtrusive as possible to regular commenters. <a href="http://pixopoint.com/products/spam-destroyer/">The Spam Destroyer plugin</a> is intended to be effortless to use, simply install
 and enjoy a spam free website :)
 
-<small>Version 1.1 features an initial untested implementation for BuddyPress and WordPress multisite signup pages.</small>
+<small>Anti-spam protection for multsite and BuddyPress coming soon! I announced that it was already working and asked for testers, but it seems I jumped the gun and it's not quite ready. Hold tight, it'll be ready soon!</small>
 
 == Installation ==
 
