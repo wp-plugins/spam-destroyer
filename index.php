@@ -5,7 +5,7 @@ Plugin Name: Spam Destroyer
 Plugin URI: http://pixopoint.com/products/spam-destroyer/
 Description: Kills spam dead in it's tracks
 Author: Ryan Hellyer
-Version: 1.1
+Version: 1.2
 Author URI: http://pixopoint.com/
 
 Copyright (c) 2012 PixoPoint Web Development
@@ -47,12 +47,6 @@ class Spam_Destroyer {
 
 	public $spam_key; // Key used for confirmation of bot-like behaviour
 	public $speed = 5; // Will be killed as spam if posted faster than this
-	public $bad_words = array( // List of stuff  we assume indicates a spam comment
-		'bargain','mortgage','spam','medical','cures','baldness','viagra','medicine',
-		'pharmacy','xanax','unsolicited','consultation','sex','fuck','cock',
-		'penis','vagin','anus','rectum','rectal','shipped','shopper','singles','biz','earnings','diplomas',
-		'refinance','consolidate','spam','vicodin','xanax','cialis','casino','rolex',
-	);
 
 	/**
 	 * Preparing to launch the almighty spam attack!
@@ -63,47 +57,23 @@ class Spam_Destroyer {
 	 */
 	public function __construct() {
 
-		// Add hooks
-		add_filter( 'preprocess_comment',                   array( $this, 'check_for_evilness' ) );
-		add_filter( 'wpmu_validate_blog_signup',            array( $this, 'kill_spam_signups' ) );
-		add_filter( 'wpmu_validate_user_signup',            array( $this, 'kill_spam_signups' ) );
-
 		// Add filters
+		add_filter( 'preprocess_comment',                   array( $this, 'check_for_comment_evilness' ) ); // Support for regular post/page comments
+		add_filter( 'wpmu_validate_blog_signup',            array( $this, 'check_for_post_evilness' ) ); // Support for multisite site signups
+		add_filter( 'wpmu_validate_user_signup',            array( $this, 'check_for_post_evilness' ) ); // Support for multisite user signups
+		add_filter( 'bbp_new_topic_pre_content',            array( $this, 'check_for_post_evilness' ), 1 ); // Support for bbPress topics
+		add_filter( 'bbp_new_reply_pre_content',            array( $this, 'check_for_post_evilness' ), 1 ); // Support for bbPress replies
+
+		// Add to hooks
 		add_action( 'init',                                 array( $this, 'set_key' ) );
 		add_action( 'wp_print_scripts',                     array( $this, 'load_payload' ) );
 		add_action( 'comment_form',                         array( $this, 'extra_input_field' ) ); // WordPress comments page
 		add_action( 'signup_hidden_fields',                 array( $this, 'extra_input_field' ) ); // WordPress multi-site signup page
 		add_action( 'bp_after_registration_submit_buttons', array( $this, 'extra_input_field' ) ); // BuddyPress signup page
-	}
+		add_action( 'bbp_theme_before_topic_form_content',  array( $this, 'extra_input_field' ) ); // bbPress signup page
+		add_action( 'bbp_theme_before_reply_form_content',  array( $this, 'extra_input_field' ) ); // bbPress signup page
+		add_action( 'register_form',                        array( $this, 'extra_input_field' ) ); // bbPress user registration page
 
-	/**
-	 * Kills spam signups dead in their tracks
-	 * This method is an alternative to pouring kerosine on sploggers and lighting a match.
-	 * Checks both the cookie and input key payloads
-	 * 
-	 * @since 1.0
-	 * @author Ryan Hellyer <ryan@pixopoint.com>
-	 */
-	public function kill_spam_signups( $result ) {
-
-		// Check the hidden input field against the key
-		if ( $_POST['killer_value'] != $this->spam_key ) {
-			// BAM! And the spam signup is dead :)
-			$result['errors']->add( 'blogname', '' );
-		}
-
-		// Check for cookies presence
-		if ( isset( $_COOKIE[ $this->spam_key ] ) ) {
-			// If time not set correctly, then assume it's spam
-			if ( $_COOKIE[$this->spam_key] > 1 && ( ( time() - $_COOKIE[$this->spam_key] ) < $this->speed ) ) {
-				// Something's up, since the commenters cookie time frame doesn't match ours
-			$result['errors']->add( 'blogname', '' );
-			}
-		} else {
-			// Cookie not set therefore destroy the evil splogger
-			$result['errors']->add( 'blogname', '' );
-		}
-		return $result;
 	}
 
 	/**
@@ -131,14 +101,12 @@ class Spam_Destroyer {
 	public function load_payload() {
 
 		// Assuming we only want the payload on singular pages (this may not be the case, so need hook/filter added here at some point to over-ride this)
-		if ( is_singular() ) {
-			wp_enqueue_script( 'jquery' );
-			wp_enqueue_script(
-				'kill_it_dead',
-				plugins_url( 'kill.php?key=' . $this->spam_key,  __FILE__ ),//  . '&rand=' . rand( 0, 999 ),
-				'jquery'
-			);
-		}
+		wp_enqueue_script( 'jquery' );
+		wp_enqueue_script(
+			'kill_it_dead',
+			plugins_url( 'kill.php?key=' . $this->spam_key,  __FILE__ ),//  . '&rand=' . rand( 0, 999 ),
+			'jquery'
+		);
 	}
 
 	/**
@@ -153,6 +121,7 @@ class Spam_Destroyer {
 	}
 
 	/**
+	 * Kachomp! Be gone evil demon spam!
 	 * Checks if the user is doing something evil
 	 * If they're detected as being evil, then the little bastards are killed dead in their tracks!
 	 * 
@@ -161,22 +130,11 @@ class Spam_Destroyer {
 	 * @param array $comment The comment
 	 * @return array The comment
 	 */
-	function check_for_evilness( $comment ) {
+	function check_for_comment_evilness( $comment ) {
 
 		// If the user is logged in, then they're clearly trusted, so continue without checking
 		if ( is_user_logged_in() )
 			return $comment;
-
-		// If comment contains something from the bad word list, then spam it ... 
-		foreach( $this->bad_words as $word ) {
-			$pos = strpos( $comment['comment_content'], $word );
-			if ( $pos === false ) {
-				// Wahoo! They didn't say this particular naughty word :D
-			}
-			else {
-				$this->kill_spam_dead( $comment ); // Kachomp! Be gone evil demon spam! (better hope this wasn't a legit commenter being crass ;) )
-			}
-		}
 
 		$type = $comment['comment_type'];
 
@@ -237,6 +195,41 @@ class Spam_Destroyer {
 
 		// YAY! It's a miracle! Something actually got listed as a legit comment :) W00P W00P!!!
 		return $comment;
+	}
+
+	/**
+	 * Kills splogger signups, BuddyPress posts and replies and bbPress spammers dead in their tracks
+	 * This method is an alternative to pouring kerosine on sploggers and lighting a match.
+	 * Checks both the cookie and input key payloads
+	 * 
+	 * @since 1.1
+	 * @author Ryan Hellyer <ryan@pixopoint.com>
+	 */
+	public function check_for_post_evilness( $result ) {
+
+		// Check the hidden input field against the key
+		if ( $_POST['killer_value'] != $this->spam_key ) {
+			// BAM! And the spam signup is dead :)
+			if ( isset( $_POST['bbp_topic_id'] ) ) {
+				bbp_add_error('bbp_reply_content', __('Sorry, but you have been detected as spam', 'spam-destroyer' ) );
+			}
+			else {
+				$result['errors']->add( 'blogname', '' );
+			}
+		}
+
+		// Check for cookies presence
+		if ( isset( $_COOKIE[ $this->spam_key ] ) ) {
+			// If time not set correctly, then assume it's spam
+			if ( $_COOKIE[$this->spam_key] > 1 && ( ( time() - $_COOKIE[$this->spam_key] ) < $this->speed ) ) {
+				// Something's up, since the commenters cookie time frame doesn't match ours
+			$result['errors']->add( 'blogname', '' );
+			}
+		} else {
+			// Cookie not set therefore destroy the evil splogger
+			$result['errors']->add( 'blogname', '' );
+		}
+		return $result;
 	}
 
 	/**

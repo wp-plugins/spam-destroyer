@@ -1,18 +1,18 @@
 === Spam Destroyer ===
 Contributors: ryanhellyer
 Donate link: http://pixopoint.com/products/spam-destroyer/
-Tags: spam, kill, killer, antispam, antispam, buddypress
-Requires at least: WP 3.4, BuddyPress 1.5
-Stable tag: 1.1
-Kills spam dead in it's tracks. Be gone evil demon spam!
+Tags: spam, kill, killer, antispam, antispam, buddypress, bbpress
+Requires at least: WP 3.4, BuddyPress 1.5, bbPress 2.0
+Stable tag: 1.2
 
+Kills spam dead in it's tracks. Be gone evil demon spam!
 
 == Description ==
 
 Stops automated spam while remaining as unobtrusive as possible to regular commenters. <a href="http://pixopoint.com/products/spam-destroyer/">The Spam Destroyer plugin</a> is intended to be effortless to use, simply install
 and enjoy a spam free website :)
 
-<small>Anti-spam protection for multsite and BuddyPress coming soon! I announced that it was already working and asked for testers, but it seems I jumped the gun and it's not quite ready. Hold tight, it'll be ready soon!</small>
+<small>This plugin now features experimental support for bbPress user registrations, bbPress guest posting, BuddyPress posts and commenting and WordPress multi-site user and blog signups. If you test it, I'd love to <a href="http://pixopoint.com/contact/">hear about the results</a>.</small>
 
 == Installation ==
 
@@ -30,6 +30,11 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 
 == Changelog ==
 
+= 1.2 (5/8/2012) =
+* Fixed multisite and BuddyPress bugs
+* Added support for bbPress registrations
+* Added support for bbPress guest posting protection
+* Removed the "bad word" list
 = 1.1 (5/8/2012) =
 * Added support for BuddyPress signup page
 * Added support for WordPress multisite signup page
@@ -46,6 +51,9 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 
 
 == Credits ==
+
+Thanks to Brian Layman for input 
+* <a href="http://ocaoimh.ie/">Donncha O Caoimh</a> - Developer of Cookies for Comments, functionality of which is incorporated into Spam Destroyer<br />
 
 Thanks to the following who wrote plugins which have functionality incorporated in Spam Destroyer
 * <a href="http://ocaoimh.ie/">Donncha O Caoimh</a> - Developer of Cookies for Comments, functionality of which is incorporated into Spam Destroyer<br />
