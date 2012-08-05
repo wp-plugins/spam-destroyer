@@ -3,20 +3,25 @@ Contributors: ryanhellyer
 Donate link: http://pixopoint.com/products/spam-destroyer/
 Tags: spam, kill, killer, antispam, antispam
 Requires at least: 3.4
-Stable tag: 1.0.3
+Stable tag: 1.1
 
 Kills spam dead in it's tracks. Be gone evil demon spam!
+
 
 == Description ==
 
 Stops automated spam while remaining as unobtrusive as possible to regular commenters. <a href="http://pixopoint.com/products/spam-destroyer/">The Spam Destroyer plugin</a> is intended to be effortless to use, simply install
 and enjoy a spam free website :)
 
+<small>Try the <a href="http://downloads.wordpress.org/plugin/spam-destroyer.zip">trunk version</a> for WordPress multisite and BuddyPress signup page support.</small>
+
 == Installation ==
 
 Simply install and activate the plugin. No settings necessary.
 
 For more information, visit the <a href="http://pixopoint.com/products/spam-destroyer/">Spam Destroyer plugin page</a>.
+
+<small>Note: Spam Destroyer apparently does not work in conjunction with the Jetpack plugin. That plugin has a nasty way of handling it's commenting system which requires you to connect to an external service and will not work if your installation is not connected to the internet (which is the case for all my development sites) and as such this problem will not be fixed any time soon. If the Jetpack team fix these major problems I will happily make the plugin compatible with it, but in the mean time I suggest avoiding the Jetpack plugin at all costs.</small>
 
 
 == Frequently Asked Questions ==
@@ -26,6 +31,9 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 
 == Changelog ==
 
+= 1.1 (5/8/2012) =
+* Added support for BuddyPress signup page
+* Added support for WordPress multisite signup page
 = 1.0.3 (30/7/2012) =
 * Upgrade to documentation
 = 1.0.2 (30/7/2012) =

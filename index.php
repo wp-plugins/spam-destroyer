@@ -5,7 +5,7 @@ Plugin Name: Spam Destroyer
 Plugin URI: http://pixopoint.com/products/spam-destroyer/
 Description: Kills spam dead in it's tracks
 Author: Ryan Hellyer
-Version: 1.0.3
+Version: 1.1
 Author URI: http://pixopoint.com/
 
 Copyright (c) 2012 PixoPoint Web Development
@@ -63,12 +63,47 @@ class Spam_Destroyer {
 	 */
 	public function __construct() {
 
-		// Add action hooks
-		add_action( 'init',               array( $this, 'set_key' ) );
-		add_action( 'wp_print_scripts',   array( $this, 'load_payload' ) );
-		add_action( 'comment_form',       array( $this, 'extra_input_field' ) );
-		add_filter( 'preprocess_comment', array( $this, 'check_for_evilness' ) );
+		// Add hooks
+		add_filter( 'preprocess_comment',                   array( $this, 'check_for_evilness' ) );
+		add_filter( 'wpmu_validate_blog_signup',            array( $this, 'kill_spam_signups' ) );
+		add_filter( 'wpmu_validate_user_signup',            array( $this, 'kill_spam_signups' ) );
 
+		// Add filters
+		add_action( 'init',                                 array( $this, 'set_key' ) );
+		add_action( 'wp_print_scripts',                     array( $this, 'load_payload' ) );
+		add_action( 'comment_form',                         array( $this, 'extra_input_field' ) ); // WordPress comments page
+		add_action( 'signup_hidden_fields',                 array( $this, 'extra_input_field' ) ); // WordPress multi-site signup page
+		add_action( 'bp_after_registration_submit_buttons', array( $this, 'extra_input_field' ) ); // BuddyPress signup page
+	}
+
+	/**
+	 * Kills spam signups dead in their tracks
+	 * This method is an alternative to pouring kerosine on sploggers and lighting a match.
+	 * Checks both the cookie and input key payloads
+	 * 
+	 * @since 1.0
+	 * @author Ryan Hellyer <ryan@pixopoint.com>
+	 */
+	public function kill_spam_signups( $result ) {
+
+		// Check the hidden input field against the key
+		if ( $_POST['killer_value'] != $this->spam_key ) {
+			// BAM! And the spam signup is dead :)
+			$result['errors']->add( 'blogname', '' );
+		}
+
+		// Check for cookies presence
+		if ( isset( $_COOKIE[ $this->spam_key ] ) ) {
+			// If time not set correctly, then assume it's spam
+			if ( $_COOKIE[$this->spam_key] > 1 && ( ( time() - $_COOKIE[$this->spam_key] ) < $this->speed ) ) {
+				// Something's up, since the commenters cookie time frame doesn't match ours
+			$result['errors']->add( 'blogname', '' );
+			}
+		} else {
+			// Cookie not set therefore destroy the evil splogger
+			$result['errors']->add( 'blogname', '' );
+		}
+		return $result;
 	}
 
 	/**
