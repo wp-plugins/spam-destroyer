@@ -13,7 +13,7 @@ Kills spam dead in it's tracks. Be gone evil demon spam!
 Stops automated spam while remaining as unobtrusive as possible to regular commenters. <a href="http://pixopoint.com/products/spam-destroyer/">The Spam Destroyer plugin</a> is intended to be effortless to use, simply install
 and enjoy a spam free website :)
 
-<small>Try the <a href="http://downloads.wordpress.org/plugin/spam-destroyer.zip">trunk version</a> for WordPress multisite and BuddyPress signup page support.</small>
+<small>Version 1.1 features an initial untested implementation for BuddyPress and WordPress multisite signup pages.</small>
 
 == Installation ==
 
