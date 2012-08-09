@@ -62,6 +62,8 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 * <a href="#">Brian Layman</a> - provided input<br />
 * <a href="http://ronalfy.com/">Ronald Huereca</a> - JS advice<br />
 * <a href="https://twitter.com/bjornjohansen">Bjørn Johansen</a> - JS advice<br />
+* <a href="https://twitter.com/shawngaffney">Shawn Gaffney</a> - bug reporting<br />
+* <a href="http://konstruktors.com/">Kaspars Dambis</a> - bug reporting<br />
 
 Thanks to the following who wrote plugins which have functionality incorporated in Spam Destroyer
 * <a href="http://ocaoimh.ie/">Donncha O Caoimh</a> - Developer of Cookies for Comments, functionality of which is incorporated into Spam Destroyer<br />
