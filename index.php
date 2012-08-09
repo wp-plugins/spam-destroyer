@@ -5,7 +5,7 @@ Plugin Name: Spam Destroyer
 Plugin URI: http://pixopoint.com/products/spam-destroyer/
 Description: Kills spam dead in it's tracks
 Author: Ryan Hellyer
-Version: 1.2
+Version: 1.2.1
 Author URI: http://pixopoint.com/
 
 Copyright (c) 2012 PixoPoint Web Development
@@ -105,7 +105,9 @@ class Spam_Destroyer {
 		wp_enqueue_script(
 			'kill_it_dead',
 			plugins_url( 'kill.php?key=' . $this->spam_key,  __FILE__ ),//  . '&rand=' . rand( 0, 999 ),
-			'jquery'
+			'jquery',
+			'1.0',
+			true
 		);
 	}
 

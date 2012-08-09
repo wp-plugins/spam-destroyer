@@ -2,8 +2,8 @@
 Contributors: ryanhellyer
 Donate link: http://pixopoint.com/products/spam-destroyer/
 Tags: spam, kill, killer, antispam, antispam, buddypress, bbpress
-Requires at least: WP 3.4, BuddyPress 1.5, bbPress 2.0
-Stable tag: 1.2
+Requires at least: 3.4
+Stable tag: 1.2.1
 
 Kills spam dead in it's tracks. Be gone evil demon spam!
 
@@ -30,6 +30,9 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 
 == Changelog ==
 
+= 1.2.1 (9/8/2012) =
+* Moved script to footer on advice of Ronald Huereca and Bjørn Johansen
+* Fixed potential security flaw in kill.php
 = 1.2 (5/8/2012) =
 * Fixed multisite and BuddyPress bugs
 * Added support for bbPress registrations
@@ -52,9 +55,11 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 
 == Credits ==
 
-Thanks to Brian Layman for input 
-* <a href="http://ocaoimh.ie/">Donncha O Caoimh</a> - Developer of Cookies for Comments, functionality of which is incorporated into Spam Destroyer<br />
+* <a href="#">Brian Layman</a> - provided input<br />
+* <a href="http://ronalfy.com/">Ronald Huereca</a> - JS advice<br />
+* <a href="https://twitter.com/bjornjohansen">Bjørn Johansen</a> - JS advice<br />
 
 Thanks to the following who wrote plugins which have functionality incorporated in Spam Destroyer
 * <a href="http://ocaoimh.ie/">Donncha O Caoimh</a> - Developer of Cookies for Comments, functionality of which is incorporated into Spam Destroyer<br />
 * <a href="http://elliottback.com/">Elliot Back</a> - Developer of WP Hashcash, <br />
+
