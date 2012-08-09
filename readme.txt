@@ -3,7 +3,7 @@ Contributors: ryanhellyer
 Donate link: http://pixopoint.com/products/spam-destroyer/
 Tags: spam, kill, killer, antispam, antispam, buddypress, bbpress
 Requires at least: 3.4
-Stable tag: 1.2.2
+Stable tag: 1.2.3
 
 Kills spam dead in it's tracks. Be gone evil demon spam!
 
@@ -30,6 +30,10 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 
 == Changelog ==
 
+= 1.2.3 (9/8/2012) =
+* Added requirement for jQuery due to bug with code introduced in 1.2.2
+= 1.2.2 (9/8/2012) =
+* Removed need for jQuery
 = 1.2.1 (9/8/2012) =
 * Moved script to footer on advice of Ronald Huereca and Bjørn Johansen
 * Fixed potential security flaw in kill.php

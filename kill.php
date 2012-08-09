@@ -48,5 +48,8 @@ if ( ! isset( $_COOKIE[ $key ] ) ) {
  * @since 1.2.2
  * @author Ryan Hellyer <ryan@pixopoint.com>
  */
-echo "document.getElementById('killer_value').value = '" . $key . "';";
+echo "jQuery(document).ready(function($) {
+	$('input#killer_value').val('" . $key . "');
+});
+";
 
