@@ -3,7 +3,7 @@ Contributors: ryanhellyer
 Donate link: http://pixopoint.com/products/spam-destroyer/
 Tags: spam, kill, killer, antispam, antispam, buddypress, bbpress
 Requires at least: 3.4
-Stable tag: 1.2.1
+Stable tag: 1.2.2
 
 Kills spam dead in it's tracks. Be gone evil demon spam!
 

@@ -43,11 +43,10 @@ if ( ! isset( $_COOKIE[ $key ] ) ) {
  * Execute hidden input field payload
  * This could probably be done without jQuery, but I suck at JS so have no idea how - feel free to provide better code!
  *
- * @since 1.0
+ * Code kindly provided by Bjørn Johansen (https://twitter.com/bjornjohansen)
+ *
+ * @since 1.2.2
  * @author Ryan Hellyer <ryan@pixopoint.com>
  */
-echo "jQuery(document).ready(function($) {
-	$('input#killer_value').val('" . $key . "');
-});
-";
+echo "document.getElementById('killer_value').value = '" . $key . "';";
 
