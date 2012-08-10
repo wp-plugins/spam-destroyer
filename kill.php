@@ -19,8 +19,17 @@
  */
 $key = $_GET['key'];
 if ( preg_match( '/[^a-z_\-0-9]/i', $key ) ) {
-	die( "Errr, that wasn't a valid key. Ping me via <a href='http://twitter.com/ryanhellyer/'>@ryanhellyer</a> if you believe this should not have occurred" );
+	die( "Errr, that wasn't a valid key." );
 }
+
+
+/*
+ * Set appropriate mime-type
+ *
+ * @since 1.2.4
+ * @author Ryan Hellyer <ryan@pixopoint.com>
+ */
+header( 'Content-Type: application/javascript' );
 
 
 /*
@@ -41,15 +50,10 @@ if ( ! isset( $_COOKIE[ $key ] ) ) {
 
 /*
  * Execute hidden input field payload
- * This could probably be done without jQuery, but I suck at JS so have no idea how - feel free to provide better code!
  *
- * Code kindly provided by Bjørn Johansen (https://twitter.com/bjornjohansen)
- *
- * @since 1.2.2
- * @author Ryan Hellyer <ryan@pixopoint.com>
+ * @since 1.2.4
+ * @author Bjørn Johansen <https://twitter.com/bjornjohansen>
  */
-echo "jQuery(document).ready(function($) {
-	$('input#killer_value').val('" . $key . "');
-});
-";
-
+echo "try {
+	document.getElementById('killer_value').value = '$key';
+} catch (e) {}";

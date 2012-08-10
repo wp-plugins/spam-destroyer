@@ -5,10 +5,10 @@ Plugin Name: Spam Destroyer
 Plugin URI: http://pixopoint.com/products/spam-destroyer/
 Description: Kills spam dead in it's tracks
 Author: Ryan Hellyer
-Version: 1.2.3
+Version: 1.2.4
 Author URI: http://pixopoint.com/
 
-Copyright (c) 2012 PixoPoint Web Development
+Copyright (c) 2012 Ryan Hellyer
 
 
 
@@ -66,7 +66,6 @@ class Spam_Destroyer {
 
 		// Add to hooks
 		add_action( 'init',                                 array( $this, 'set_key' ) );
-		add_action( 'wp_print_scripts',                     array( $this, 'load_payload' ) );
 		add_action( 'comment_form',                         array( $this, 'extra_input_field' ) ); // WordPress comments page
 		add_action( 'signup_hidden_fields',                 array( $this, 'extra_input_field' ) ); // WordPress multi-site signup page
 		add_action( 'bp_after_registration_submit_buttons', array( $this, 'extra_input_field' ) ); // BuddyPress signup page
@@ -94,19 +93,16 @@ class Spam_Destroyer {
 	/**
 	 * Loading the javascript payload
 	 *
-	 * @todo Write a script which doesn't require jQuery
 	 * @since 1.0
 	 * @author Ryan Hellyer <ryan@pixopoint.com>
 	 */
 	public function load_payload() {
 
-		// Assuming we only want the payload on singular pages (this may not be the case, so need hook/filter added here at some point to over-ride this)
-		wp_enqueue_script( 'jquery' );
 		wp_enqueue_script(
 			'kill_it_dead',
-			plugins_url( 'kill.php?key=' . $this->spam_key,  __FILE__ ),//  . '&rand=' . rand( 0, 999 ),
-			'jquery',
-			'1.0',
+			plugins_url( 'kill.php?key=' . $this->spam_key,  __FILE__ ),
+			'',
+			'1.1',
 			true
 		);
 	}
@@ -120,6 +116,9 @@ class Spam_Destroyer {
 	public function extra_input_field() {
 		echo '<input type="hidden" id="killer_value" name="killer_value" value="' . md5( rand( 0, 999 ) ) . '"/>';
 		echo '<noscript>' . __( 'Sorry, but you are required to use a javascript enabled brower to comment here.', 'spam-killer' ) . '</noscript>';
+
+		// Enqueue the payload - placed here so that it is ONLY used when on a page utilizing the plugin
+		$this->load_payload();
 	}
 
 	/**

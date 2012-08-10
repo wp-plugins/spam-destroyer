@@ -1,9 +1,9 @@
 === Spam Destroyer ===
-Contributors: ryanhellyer
+Contributors: ryanhellyer, bjornjohansen
 Donate link: http://pixopoint.com/products/spam-destroyer/
-Tags: spam, kill, killer, antispam, antispam, buddypress, bbpress
+Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate
 Requires at least: 3.4
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 
 Kills spam dead in it's tracks. Be gone evil demon spam!
 
@@ -30,6 +30,12 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 
 == Changelog ==
 
+= 1.2.4 (11/8/2012) =
+* Re-removed requirement for jQuery
+* Added try / catch to JS to ensure it doesn't fail
+* Moved JS enqueue to form field area so that it only loads when needed
+* Added Bjørn Johansen to the contributor list
+* Added correct mime-type to JS file
 = 1.2.3 (9/8/2012) =
 * Added requirement for jQuery due to bug with code introduced in 1.2.2
 = 1.2.2 (9/8/2012) =
@@ -61,9 +67,8 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 
 * <a href="http://ocaoimh.ie/">Donncha O Caoimh</a> - Developer of Cookies for Comments, functionality of which is incorporated into Spam Destroyer<br />
 * <a href="http://elliottback.com/">Elliot Back</a> - Developer of WP Hashcash, functionality of which is incorporated into Spam Destroyer<br />
-* <a href="#">Brian Layman</a> - code advice<br />
-* <a href="https://twitter.com/bjornjohansen">Bjørn Johansen</a> - JS advice and bug reporting<br />
+* <a href="#">Brian Layman</a> - Code advice<br />
 * <a href="http://ronalfy.com/">Ronald Huereca</a> - JS advice<br />
-* <a href="https://twitter.com/shawngaffney">Shawn Gaffney</a> - bug reporting<br />
-* <a href="http://konstruktors.com/">Kaspars Dambis</a> - bug reporting<br />
+* <a href="https://twitter.com/shawngaffney">Shawn Gaffney</a> - Bug reporting<br />
+* <a href="http://konstruktors.com/">Kaspars Dambis</a> - Bug reporting<br />
 
