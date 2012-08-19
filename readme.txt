@@ -1,9 +1,9 @@
 === Spam Destroyer ===
-Contributors: ryanhellyer, bjornjohansen
+Contributors: ryanhellyer, bjornjohansen, dimadin
 Donate link: http://pixopoint.com/products/spam-destroyer/
 Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate
 Requires at least: 3.4
-Stable tag: 1.2.4
+Stable tag: 1.2.5
 
 Kills spam dead in it's tracks. Be gone evil demon spam!
 
@@ -30,6 +30,12 @@ Check out the FAQ on the <a href="http://pixopoint.com/products/spam-destroyer/"
 
 == Changelog ==
 
+= 1.2.5 (19/8/2012) =
+* Changed from kill.php file to kill.js file
+* Allows for caching of payload
+* Allows for automatic script concatentation
+* Cookie creation achieved via raw JS
+* Key is passed to script via wp_localize_script()
 = 1.2.4 (11/8/2012) =
 * Re-removed requirement for jQuery
 * Added try / catch to JS to ensure it doesn't fail

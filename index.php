@@ -5,7 +5,7 @@ Plugin Name: Spam Destroyer
 Plugin URI: http://pixopoint.com/products/spam-destroyer/
 Description: Kills spam dead in it's tracks
 Author: Ryan Hellyer
-Version: 1.2.4
+Version: 1.2.5
 Author URI: http://pixopoint.com/
 
 Copyright (c) 2012 Ryan Hellyer
@@ -98,13 +98,24 @@ class Spam_Destroyer {
 	 */
 	public function load_payload() {
 
+		// Load the payload
 		wp_enqueue_script(
 			'kill_it_dead',
-			plugins_url( 'kill.php?key=' . $this->spam_key,  __FILE__ ),
+			plugins_url( 'kill.js',  __FILE__ ),
 			'',
-			'1.1',
+			'1.2',
 			true
 		);
+
+		// Set the key as JS variable for use in the payload
+		wp_localize_script(
+			'kill_it_dead',
+			'spam_destroyer',
+			array(
+				'key' => $this->spam_key
+			)
+		);
+
 	}
 
 	/**
@@ -131,7 +142,7 @@ class Spam_Destroyer {
 	 * @param array $comment The comment
 	 * @return array The comment
 	 */
-	function check_for_comment_evilness( $comment ) {
+	public function check_for_comment_evilness( $comment ) {
 
 		// If the user is logged in, then they're clearly trusted, so continue without checking
 		if ( is_user_logged_in() )
@@ -242,7 +253,7 @@ class Spam_Destroyer {
 	 * @param array $comment The comment
 	 * @return array The comment
 	 */
-	function kill_spam_dead( $comment ) {
+	public function kill_spam_dead( $comment ) {
 
 		// Set as spam
 		add_filter( 'pre_comment_approved', create_function( '$a', 'return \'spam\';' ) );
