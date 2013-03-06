@@ -2,13 +2,13 @@
 /*
 
 Plugin Name: Spam Destroyer
-Plugin URI: http://pixopoint.com/products/spam-destroyer/
+Plugin URI: http://geek.ryanhellyer.net/products/spam-destroyer/
 Description: Kills spam dead in it's tracks
 Author: Ryan Hellyer
-Version: 1.2.5
-Author URI: http://pixopoint.com/
+Version: 1.3
+Author URI: http://geek.ryanhellyer.net/
 
-Copyright (c) 2012 Ryan Hellyer
+Copyright (c) 2013 Ryan Hellyer
 
 
 
@@ -40,7 +40,7 @@ license.txt file included with this plugin for more information.
  * Spam Destroyer class
  * 
  * @copyright Copyright (c), Ryan Hellyer
- * @author Ryan Hellyer <ryan@pixopoint.com>
+ * @author Ryan Hellyer <ryanhellyer@gmail.com>
  * @since 1.0
  */
 class Spam_Destroyer {
@@ -51,9 +51,6 @@ class Spam_Destroyer {
 	/**
 	 * Preparing to launch the almighty spam attack!
 	 * Spam, prepare for your imminent death!
-	 * 
-	 * @since 1.0
-	 * @author Ryan Hellyer <ryan@pixopoint.com>
 	 */
 	public function __construct() {
 
@@ -72,15 +69,12 @@ class Spam_Destroyer {
 		add_action( 'bbp_theme_before_topic_form_content',  array( $this, 'extra_input_field' ) ); // bbPress signup page
 		add_action( 'bbp_theme_before_reply_form_content',  array( $this, 'extra_input_field' ) ); // bbPress signup page
 		add_action( 'register_form',                        array( $this, 'extra_input_field' ) ); // bbPress user registration page
-
+		add_action( 'comment_form_top',                     array( $this, 'error_notice' ) );
 	}
 
 	/**
 	 * Set spam key
 	 * Needs set at init due to using nonces
-	 * 
-	 * @since 1.0
-	 * @author Ryan Hellyer <ryan@pixopoint.com>
 	 */
 	public function set_key() {
 
@@ -92,9 +86,6 @@ class Spam_Destroyer {
 
 	/**
 	 * Loading the javascript payload
-	 *
-	 * @since 1.0
-	 * @author Ryan Hellyer <ryan@pixopoint.com>
 	 */
 	public function load_payload() {
 
@@ -120,9 +111,6 @@ class Spam_Destroyer {
 
 	/**
 	 * An extra input field, which is intentionally filled with garble, but will be replaced dynamically with JS later
-	 * 
-	 * @since 1.0
-	 * @author Ryan Hellyer <ryan@pixopoint.com>
 	 */
 	public function extra_input_field() {
 		echo '<input type="hidden" id="killer_value" name="killer_value" value="' . md5( rand( 0, 999 ) ) . '"/>';
@@ -137,8 +125,6 @@ class Spam_Destroyer {
 	 * Checks if the user is doing something evil
 	 * If they're detected as being evil, then the little bastards are killed dead in their tracks!
 	 * 
-	 * @since 1.0
-	 * @author Ryan Hellyer <ryan@pixopoint.com>
 	 * @param array $comment The comment
 	 * @return array The comment
 	 */
@@ -213,9 +199,6 @@ class Spam_Destroyer {
 	 * Kills splogger signups, BuddyPress posts and replies and bbPress spammers dead in their tracks
 	 * This method is an alternative to pouring kerosine on sploggers and lighting a match.
 	 * Checks both the cookie and input key payloads
-	 * 
-	 * @since 1.1
-	 * @author Ryan Hellyer <ryan@pixopoint.com>
 	 */
 	public function check_for_post_evilness( $result ) {
 
@@ -244,12 +227,32 @@ class Spam_Destroyer {
 		return $result;
 	}
 
+	/*
+	 * Redirect spammers
+	 * We need to redirect spammers so that we can serve a message telling
+	 * them why their post will not appear.
+	 */
+	function redirect_spam_commenters( $location ){
+		$newurl = substr( $location, 0, strpos( $location, "#comment" ) );
+		return $newurl . '?spammer=confirm#reply-title';
+	}
+
+	/*
+	 * Output error notice for spammers
+	 */
+	public function error_notice() {
+
+		if ( ! isset( $_GET['spammer'] ) )
+			return;
+
+		// Display notice
+		echo '<div id="comments-error-message"><p>' . __( 'Sorry, but our system has recognised you as a spammer. If you believe this to be an error, please contact us so that we can rectify the situation.', 'spam-destroyer' ) . '</p></div>';
+	}
+
 	/**
 	 * Be gone evil demon spam!
 	 * Kill spam dead in it's tracks :)
 	 * 
-	 * @since 1.0
-	 * @author Ryan Hellyer <ryan@pixopoint.com>
 	 * @param array $comment The comment
 	 * @return array The comment
 	 */
@@ -259,6 +262,11 @@ class Spam_Destroyer {
 		add_filter( 'pre_comment_approved', create_function( '$a', 'return \'spam\';' ) );
 		// add_filter( 'comment_post', create_function( '$id', 'wp_delete_comment( $id ); die( \'This comment has been deleted\' );' ) );
 		// add_filter( 'pre_comment_approved', create_function( '$a', 'return 0;' ) );
+
+		// If permalinks are on, then redirect to a query var (allows us to provide message in case of false positives - which should never happen, but best be on the safe side!)
+		if ( '' != get_option( 'permalink_structure' ) ) {
+			add_filter( 'comment_post_redirect', array( $this, 'redirect_spam_commenters' ) );
+		}
 
 		// Bypass Akismet since comment is spam
 		if ( function_exists( 'akismet_auto_check_comment' ) ) {
@@ -271,5 +279,4 @@ class Spam_Destroyer {
 	}
 
 }
-new Spam_Destroyer();
-
+$spam_destroyer = new Spam_Destroyer();
