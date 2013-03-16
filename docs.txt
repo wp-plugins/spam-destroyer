@@ -1,0 +1,7 @@
+JS input replacement
+Cookie check
+CAPTCHA
+
+Trackbacks ... check for URL on page
+Blocks based on time. Defaults to 5 seconds since last post.
+
