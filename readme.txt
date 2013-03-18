@@ -3,7 +3,7 @@ Contributors: ryanhellyer, bjornjohansen, dimadin
 Donate link: http://geek.ryanhellyer.net/products/spam-destroyer/
 Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate
 Requires at least: 3.5
-Stable tag: 1.3
+Stable tag: 1.3.1
 
 Kills spam dead in it's tracks. Be gone evil demon spam!
 
@@ -30,6 +30,9 @@ Check out the FAQ on the <a href="http://geek.ryanhellyer.net/products/spam-dest
 
 == Changelog ==
 
+= 1.3.1 (18/3/2013) =
+* Fixed bug which prevented user registration
+* Thanks to Marte Sollund and Ingvild Evje of <a href="http://nettsett.no/">Nettsett</a> for an excellent bug report
 = 1.3 (6/3/2013) =
 * Instantiated class to variable to allow for remove hooks and filters when necessary
 * Added redirect after spam comment detected
@@ -76,9 +79,10 @@ Check out the FAQ on the <a href="http://geek.ryanhellyer.net/products/spam-dest
 == Credits ==
 
 * <a href="http://ocaoimh.ie/">Donncha O Caoimh</a> - Developer of Cookies for Comments, functionality of which is incorporated into Spam Destroyer<br />
+* <a href="http://ocaoimh.ie/">Donncha O Caoimh</a> - Developer of Cookies for Comments, functionality of which is incorporated into Spam Destroyer<br />
 * <a href="http://elliottback.com/">Elliot Back</a> - Developer of WP Hashcash, functionality of which is incorporated into Spam Destroyer<br />
+* <a href="Marte Sollund and Ingvild Evje</a> - Bug reporting<br />
 * <a href="#">Brian Layman</a> - Code advice<br />
 * <a href="http://ronalfy.com/">Ronald Huereca</a> - JS advice<br />
 * <a href="https://twitter.com/shawngaffney">Shawn Gaffney</a> - Bug reporting<br />
 * <a href="http://konstruktors.com/">Kaspars Dambis</a> - Bug reporting<br />
-

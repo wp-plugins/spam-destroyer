@@ -5,7 +5,7 @@ Plugin Name: Spam Destroyer
 Plugin URI: http://geek.ryanhellyer.net/products/spam-destroyer/
 Description: Kills spam dead in it's tracks
 Author: Ryan Hellyer
-Version: 1.3
+Version: 1.3.1
 Author URI: http://geek.ryanhellyer.net/
 
 Copyright (c) 2013 Ryan Hellyer
@@ -56,10 +56,10 @@ class Spam_Destroyer {
 
 		// Add filters
 		add_filter( 'preprocess_comment',                   array( $this, 'check_for_comment_evilness' ) ); // Support for regular post/page comments
-		add_filter( 'wpmu_validate_blog_signup',            array( $this, 'check_for_post_evilness' ) ); // Support for multisite site signups
-		add_filter( 'wpmu_validate_user_signup',            array( $this, 'check_for_post_evilness' ) ); // Support for multisite user signups
 		add_filter( 'bbp_new_topic_pre_content',            array( $this, 'check_for_post_evilness' ), 1 ); // Support for bbPress topics
 		add_filter( 'bbp_new_reply_pre_content',            array( $this, 'check_for_post_evilness' ), 1 ); // Support for bbPress replies
+		add_filter( 'wpmu_validate_blog_signup',            array( $this, 'check_for_post_evilness' ) ); // Support for multisite site signups
+		add_filter( 'wpmu_validate_user_signup',            array( $this, 'check_for_post_evilness' ) ); // Support for multisite user signups
 
 		// Add to hooks
 		add_action( 'init',                                 array( $this, 'set_key' ) );
@@ -201,6 +201,10 @@ class Spam_Destroyer {
 	 * Checks both the cookie and input key payloads
 	 */
 	public function check_for_post_evilness( $result ) {
+
+		// If the user is logged in, then they're clearly trusted, so continue without checking
+		if ( is_user_logged_in() )
+			return $comment;
 
 		// Check the hidden input field against the key
 		if ( $_POST['killer_value'] != $this->spam_key ) {
