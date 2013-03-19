@@ -35,14 +35,16 @@ license.txt file included with this plugin for more information.
 */
 
 /*
+ *
+ *
+ ******    NEED TO SET SENSIBLE ERROR MESSAGE FOR WHEN USER FORGETS TO ADD ANSWER TO MATH PROBLEM *****
+ *
+ *
+ *
  * === low ===
  * No JS = Only CAPTCHA
  * With JS = Only Cookie and JS input replacement
  *
- * === medium ===
- * No JS = doesn't work
- * With JS = Only Cookie and JS input replacement
- * 
  * === high ===
  * No JS = doesn't work
  * With JS = CAPTCHA, Cookie and JS input replacement
@@ -79,7 +81,7 @@ class Spam_Destroyer {
 		// Add to hooks
 		add_action( 'init',                                 array( $this, 'set_key' ) );
 		add_action( 'init',                                 array( $this, 'set_captcha' ) );
-		add_action( 'comment_form',                         array( $this, 'extra_input_field' ) ); // WordPress comments page
+		add_action( 'comment_form_after_fields',                         array( $this, 'extra_input_field' ) ); // WordPress comments page
 		add_action( 'signup_hidden_fields',                 array( $this, 'extra_input_field' ) ); // WordPress multi-site signup page
 		add_action( 'bp_after_registration_submit_buttons', array( $this, 'extra_input_field' ) ); // BuddyPress signup page
 		add_action( 'bbp_theme_before_topic_form_content',  array( $this, 'extra_input_field' ) ); // bbPress signup page
@@ -154,10 +156,26 @@ class Spam_Destroyer {
 	public function extra_input_field() {
 		echo '<input type="hidden" id="killer_value" name="killer_value" value="' . md5( rand( 0, 999 ) ) . '"/>';
 		
-		echo '<label>' . $this->captcha_question . '</label>';
-		echo '<input type="text" id="killer_captcha" name="killer_captcha" value="" />';
-		echo '<noscript>' . __( 'Sorry, but you are required to use a javascript enabled brower to comment here.', 'spam-killer' ) . '</noscript>';
+		// If low spam protection is set, then only display math question for noscript
+		if ( SPAM_DESTROYER_PROTECTION == 'low' ) {
+			echo '<noscript>';
+		}
 
+		echo '<p class="spam-killer">';
+		echo '<label>' . __( 'What is', 'spam-killer' ) . ' ' . $this->captcha_question . '</label>';
+		echo '<input type="text" id="killer_captcha" name="killer_captcha" value="" />';
+		echo '</p>';
+
+		// If low spam protection is set, then only display math question for noscript
+		if ( SPAM_DESTROYER_PROTECTION == 'low' ) {
+			echo '</noscript>';
+		}
+
+		// If high spam protection is set, then non JS users are blocked
+		if ( SPAM_DESTROYER_PROTECTION == 'high' ) {
+			echo '<noscript>' . __( 'Sorry, but you are required to use a javascript enabled brower to comment here.', 'spam-killer' ) . '</noscript>';
+		}
+		
 		// Enqueue the payload - placed here so that it is ONLY used when on a page utilizing the plugin
 		$this->load_payload();
 	}
@@ -213,48 +231,46 @@ class Spam_Destroyer {
 		} else {
 
 			// Check for cookies presence
-			$cookie_match = true; // Assuming Cookie is good until proven otherwise
 			if ( isset( $_COOKIE[ $this->spam_key ] ) ) {
 				// If time not set correctly, then assume it's spam
 				if ( $_COOKIE[$this->spam_key] > 1 && ( ( time() - $_COOKIE[$this->spam_key] ) < $this->speed ) ) {
-					$cookie_match = false; // Something's up, since the commenters cookie time frame doesn't match ours
+					$this->kill_spam_dead( $comment ); // Something's up, since the commenters cookie time frame doesn't match ours
 				}
 			} else {
-				$cookie_match = false; // Ohhhh! Cookie not set, so killing the little dick before it gets through!
+				$this->kill_spam_dead( $comment ); // Ohhhh! Cookie not set, so killing the little dick before it gets through!
 			}
 
+			// If spam protection set to low, then block comment if captcha and key are not set
 			if ( SPAM_DESTROYER_PROTECTION == 'low' ) {
 
-				if (
-					$_POST['killer_captcha'] == $this->captcha_value ||
-					( $_POST['killer_value'] == $this->spam_key && $cookie_match == true )
-				) {
-					$this->kill_spam_dead( $comment );
+				if ( isset( $_POST['killer_captcha'] ) ) {
+					$killer_captcha = $_POST['killer_captcha'];
+				} else {
+					$killer_captcha = '';
 				}
-				
-			}
-
-			if ( SPAM_DESTROYER_PROTECTION == 'medium' ) {
 
 				if (
-					( $_POST['killer_value'] == $this->spam_key && $cookie_match == true )
+					$killer_captcha == $this->captcha_value ||
+					$_POST['killer_value'] == $this->spam_key
 				) {
+					// Schweeet! Looks like they're not spam :)
+				} else {
 					$this->kill_spam_dead( $comment );
 				}
-				
+
 			}
 
+			// If spam protection set to low, then block comment if captcha or key are not set
 			if ( SPAM_DESTROYER_PROTECTION == 'high' ) {
 
 				if (
-					$_POST['killer_captcha'] == $this->captcha_value &&
-					( $_POST['killer_value'] == $this->spam_key && $cookie_match == true )
+					$killer_captcha != $this->captcha_value ||
+					$_POST['killer_value'] != $this->spam_key
 				) {
-					$this->kill_spam_dead( $comment );
+					$this->kill_spam_dead( $comment ); // Ding dong the spam is dead!
 				}
-				
-			}
 
+			}
 		}
 
 		// YAY! It's a miracle! Something actually got listed as a legit comment :) W00P W00P!!!
@@ -268,11 +284,15 @@ class Spam_Destroyer {
 	 */
 	public function check_for_post_evilness( $result ) {
 
+		// Ignore if user is logged in
+		if ( is_user_logged_in() )
+			return;
+
 		// Check the hidden input field against the key
 		if ( $_POST['killer_value'] != $this->spam_key ) {
 			// BAM! And the spam signup is dead :)
 			if ( isset( $_POST['bbp_topic_id'] ) ) {
-				bbp_add_error('bbp_reply_content', __('Sorry, but you have been detected as spam', 'spam-destroyer' ) );
+				bbp_add_error('bbp_reply_content', __( 'Sorry, but you have been detected as spam', 'spam-destroyer' ) );
 			}
 			else {
 				$result['errors']->add( 'blogname', '' );
