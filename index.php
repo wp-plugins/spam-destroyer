@@ -49,7 +49,8 @@ license.txt file included with this plugin for more information.
  * No JS = doesn't work
  * With JS = CAPTCHA, Cookie and JS input replacement
  */
-define( 'SPAM_DESTROYER_PROTECTION', 'low' ); // low, medium or high
+//define( 'SPAM_DESTROYER_PROTECTION', 'low' ); // low, medium or high
+define( 'SPAM_DESTROYER_PROTECTION', 'high' ); // low, medium or high
 
 /**
  * Spam Destroyer class
@@ -240,14 +241,15 @@ class Spam_Destroyer {
 				$this->kill_spam_dead( $comment ); // Ohhhh! Cookie not set, so killing the little dick before it gets through!
 			}
 
+			// Set the captcha variable
+			if ( isset( $_POST['killer_captcha'] ) ) {
+				$killer_captcha = $_POST['killer_captcha'];
+			} else {
+				$killer_captcha = '';
+			}
+
 			// If spam protection set to low, then block comment if captcha and key are not set
 			if ( SPAM_DESTROYER_PROTECTION == 'low' ) {
-
-				if ( isset( $_POST['killer_captcha'] ) ) {
-					$killer_captcha = $_POST['killer_captcha'];
-				} else {
-					$killer_captcha = '';
-				}
 
 				if (
 					$killer_captcha == $this->captcha_value ||
@@ -263,10 +265,10 @@ class Spam_Destroyer {
 			// If spam protection set to low, then block comment if captcha or key are not set
 			if ( SPAM_DESTROYER_PROTECTION == 'high' ) {
 
-				if (
-					$killer_captcha != $this->captcha_value ||
-					$_POST['killer_value'] != $this->spam_key
-				) {
+				if ( $killer_captcha != $this->captcha_value ) {
+					$this->failed_captcha( $comment ); // Woops! They failed the captcha, but best not kill it in case they're a real person!
+				}
+				if ( $_POST['killer_value'] != $this->spam_key ) {
 					$this->kill_spam_dead( $comment ); // Ding dong the spam is dead!
 				}
 
@@ -281,6 +283,9 @@ class Spam_Destroyer {
 	 * Kills splogger signups, BuddyPress posts and replies and bbPress spammers dead in their tracks
 	 * This method is an alternative to pouring kerosine on sploggers and lighting a match.
 	 * Checks both the cookie and input key payloads
+	 *
+	 * @param array $result The result of the registration submission
+	 * @return array $result The result of the registration submission
 	 */
 	public function check_for_post_evilness( $result ) {
 
@@ -317,6 +322,9 @@ class Spam_Destroyer {
 	 * Redirect spammers
 	 * We need to redirect spammers so that we can serve a message telling
 	 * them why their post will not appear.
+	 *
+	 * @param string $location URL for current location
+	 * @return string New URL to redirect to
 	 */
 	function redirect_spam_commenters( $location ){
 		$newurl = substr( $location, 0, strpos( $location, "#comment" ) );
@@ -333,6 +341,16 @@ class Spam_Destroyer {
 
 		// Display notice
 		echo '<div id="comments-error-message"><p>' . __( 'Sorry, but our system has recognised you as a spammer. If you believe this to be an error, please contact us so that we can rectify the situation.', 'spam-destroyer' ) . '</p></div>';
+	}
+
+	/**
+	 * Deal with users who fail the math problem
+	 * 
+	 * @param array $comment The comment
+	 */
+	public function failed_captcha( $comment ) {
+		$error = __( 'You forgot to enter the math problem<br /><br />"' . $comment['comment_content'] . '"', 'spam-destroyer' );
+		wp_die( $error, '403 Forbidden', array( 'response' => 403 ) );
 	}
 
 	/**
