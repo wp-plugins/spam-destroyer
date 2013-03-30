@@ -12,7 +12,7 @@ Kills spam dead in it's tracks. Be gone evil demon spam!
 Stops automated spam while remaining as unobtrusive as possible to regular commenters. <a href="http://geek.ryanhellyer.net/products/spam-destroyer/">The Spam Destroyer plugin</a> is intended to be effortless to use, simply install
 and enjoy a spam free website :)
 
-<small>This plugin now features experimental support for bbPress user registrations, bbPress guest posting, BuddyPress posts and commenting and WordPress multi-site user and blog signups. If you test it, I'd love to <a href="http://geek.ryanhellyer.net/contact/">hear about the results</a>.</small>
+<small>This version of the plugin does not work for user registrations, bbPress or BuddyPress, however there is an experimental version available which does. You can download the experimental version of the plugin from the <a href="http://geek.ryanhellyer.net/products/spam-destroyer/">Spam Destroyer page on geek.ryanhellyer.net</a>. If you test it, I'd love to <a href="http://geek.ryanhellyer.net/contact/">hear about the results</a>.</small>
 
 == Installation ==
 
