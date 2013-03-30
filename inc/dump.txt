@@ -1,0 +1,12 @@
+ 1364245198
+
+false 1364245236
+
+false 1364245238
+
+http://spam-stats.ryanhellyer.net/?domain=http://localhost/wordpress&previous_spam=7&previous_ham=2&previous_false=2&previous_start=1364030386&previous_end=1364113370&total_spam=3531&total_ham=2&total_false=16&total_start=1264020189 : false : 1364245447
+
+http://spam-stats.ryanhellyer.net/?domain=http://localhost/wordpress&previous_spam=7&previous_ham=2&previous_false=2&previous_start=1364030386&previous_end=1364113370&total_spam=3531&total_ham=2&total_false=16&total_start=1264020189 : false : 1364245447
+
+http://spam-stats.ryanhellyer.net/?domain=http://localhost/wordpress&previous_spam=7&previous_ham=2&previous_false=2&previous_start=1364030386&previous_end=1364113370&total_spam=3531&total_ham=2&total_false=20&total_start=1264020189 : false : 1364245659
+

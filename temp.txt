@@ -1,0 +1,12 @@
+Array
+(
+    [author] => Ryan
+    [email] => raeyhd@sgfdh.com
+    [url] => 
+    [killer_value] => ff21ac7aa50c16b02f4c74d17c40f1asf3f
+    [killer_captcha] => 4
+    [comment] => SPAMZ
+    [submit] => Post Comment
+    [comment_post_ID] => 4122
+    [comment_parent] => 0
+)
