@@ -1,7 +1,29 @@
+/*
+
+Set reasonable number of sig. figs ... 
+class-spam-destroyer-statistics.php
+
+
+ * === low ===
+ * No JS = Only CAPTCHA
+ * With JS = Only Cookie and JS input replacement
+ *
+ * === high ===
+ * No JS = doesn't work
+ * With JS = CAPTCHA, Cookie and JS input replacement
+ * 
+ * === Possible extras ===
+ * 		Browser sniffing?
+ * 		More advanced CAPTCHA
+ * 		StopForumSpam
+ * 		Dashboard widget with stats
+ */
+
+
+
 JS input replacement
 Cookie check
 CAPTCHA
 
 Trackbacks ... check for URL on page
 Blocks based on time. Defaults to 5 seconds since last post.
-
