@@ -3,7 +3,7 @@ Contributors: ryanhellyer, bjornjohansen, dimadin
 Donate link: http://geek.ryanhellyer.net/products/spam-destroyer/
 Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate
 Requires at least: 3.5
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 
 Kills spam dead in it's tracks. Be gone evil demon spam!
 
@@ -30,6 +30,8 @@ Check out the FAQ on the <a href="http://geek.ryanhellyer.net/products/spam-dest
 
 == Changelog ==
 
+= 1.3.2 (24/6/2013) =
+* Fixed short cookie time bug thanks to Milan Dinić
 = 1.3.1 (18/3/2013) =
 * Fixed bug which prevented user registration
 * Thanks to Marte Sollund and Ingvild Evje of <a href="http://nettsett.no/">Nettsett</a> for an excellent bug report

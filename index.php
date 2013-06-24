@@ -5,7 +5,7 @@ Plugin Name: Spam Destroyer
 Plugin URI: http://geek.ryanhellyer.net/products/spam-destroyer/
 Description: Kills spam dead in it's tracks
 Author: Ryan Hellyer
-Version: 1.3.1
+Version: 1.3.2
 Author URI: http://geek.ryanhellyer.net/
 
 Copyright (c) 2013 Ryan Hellyer
@@ -103,8 +103,8 @@ class Spam_Destroyer {
 			'kill_it_dead',
 			'spam_destroyer',
 			array(
-				'key' => $this->spam_key
-			)
+				'key'      => $this->spam_key, 
+				'lifetime' => absint( apply_filters( 'spam_destroyer_cookie_lifetime', HOUR_IN_SECONDS ) ) )
 		);
 
 	}
@@ -236,9 +236,9 @@ class Spam_Destroyer {
 	 * We need to redirect spammers so that we can serve a message telling
 	 * them why their post will not appear.
 	 */
-	function redirect_spam_commenters( $location ){
+	public function redirect_spam_commenters( $location ){
 		$newurl = substr( $location, 0, strpos( $location, "#comment" ) );
-		return $newurl . '?spammer=confirm#reply-title';
+		return add_query_arg( 'spammer', 'confirm', $newurl ) . '#reply-title';
 	}
 
 	/*

@@ -7,7 +7,7 @@
 function sdCreateCookie(name) {
 var unix = Math.round(+new Date()/1000); // Current time in seconds
 	var expire = new Date(); // Current time in miliseconds
-	expire.setTime(expire.getTime()+(10*60*1000)); // 10 min * 60s * 1000 miliseconds
+	expire.setTime(expire.getTime()+(spam_destroyer.lifetime*1000)); // Cookie lifetime in seconds * 1000 miliseconds
 	var expires = "; expires="+expire.toUTCString();
 	document.cookie = name+"="+unix+expires+"; path=/";
 }
