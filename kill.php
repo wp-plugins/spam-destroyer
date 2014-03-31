@@ -38,7 +38,7 @@ header( 'Content-Type: application/javascript' );
  * @since 1.0
  * @author Ryan Hellyer <ryan@pixopoint.com>
  */
-if ( ! isset( $_COOKIE[ $key ] ) ) {
+if ( ! isset( $_COOKIE[ esc_attr( $key ) ] ) ) {
 	@setcookie(
 		$key,   // The payload :)
 		time(),         // Cookie creation time
@@ -55,5 +55,5 @@ if ( ! isset( $_COOKIE[ $key ] ) ) {
  * @author Bjørn Johansen <https://twitter.com/bjornjohansen>
  */
 echo "try {
-	document.getElementById('killer_value').value = '$key';
+	document.getElementById('killer_value').value = '" . esc_attr( $key ) . "';
 } catch (e) {}";
