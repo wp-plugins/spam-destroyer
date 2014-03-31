@@ -1,16 +1,13 @@
 <?php
 /*
-
 Plugin Name: Spam Destroyer
 Plugin URI: http://geek.ryanhellyer.net/products/spam-destroyer/
 Description: Kills spam dead in it's tracks
 Author: Ryan Hellyer
-Version: 1.3.2
+Version: 1.4
 Author URI: http://geek.ryanhellyer.net/
 
-Copyright (c) 2013 Ryan Hellyer
-
-
+Copyright (c) 2014 Ryan Hellyer
 
 
 Based on the following plugins ...
@@ -21,7 +18,8 @@ http://ocaoimh.ie/cookies-for-comments/
 WP Hashcash by Elliot Back
 http://wordpress-plugins.feifei.us/hashcash/
 
-
+Spam Catharsis by Brian Layman
+http://TheCodeCave.com/plugins/spam-catharsis/
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License version 2 as
@@ -47,12 +45,22 @@ class Spam_Destroyer {
 
 	public $spam_key; // Key used for confirmation of bot-like behaviour
 	public $speed = 5; // Will be killed as spam if posted faster than this
+	public $spam_days = 5; // How many days to keep spam around
+	public $first_deletion = 120; // How soon in seconds after activation should the first deletion be triggered
+	public $spam_delete_limit = 200; // Maximum number of spam IDs to delete at a time
+	public $spam_deletion_interval = 600; // If more than spam_delete_limit comments exist, trigger another deletion after this interval in seconds
 
 	/**
 	 * Preparing to launch the almighty spam attack!
 	 * Spam, prepare for your imminent death!
 	 */
 	public function __construct() {
+
+		// Activation hook
+		// Trigger a daily deletion of spam
+		register_activation_hook( __FILE__, array( $this, 'reg_spam_destroyer_cleanout' ) );
+		// Trigger an initial deletion of the spam before the end of the day
+		register_activation_hook( __FILE__, array( $this, 'schedule_single_deletion_event' ) );
 
 		// Add filters
 		add_filter( 'preprocess_comment',                   array( $this, 'check_for_comment_evilness' ) ); // Support for regular post/page comments
@@ -69,7 +77,10 @@ class Spam_Destroyer {
 		add_action( 'bbp_theme_before_topic_form_content',  array( $this, 'extra_input_field' ) ); // bbPress signup page
 		add_action( 'bbp_theme_before_reply_form_content',  array( $this, 'extra_input_field' ) ); // bbPress signup page
 		add_action( 'register_form',                        array( $this, 'extra_input_field' ) ); // bbPress user registration page
-		add_action( 'comment_form_top',                     array( $this, 'error_notice' ) );
+		add_action( 'comment_form_top',                     array( $this, 'error_notice' ) );		// Message displayed when spammer is discovered
+		add_action( 'spam_destroyer_cleanout',				array( $this, 'apply_cleanout' ) ); 	// Fires from registered event
+		add_action( 'spam_destroyer_cleanout_single',		array( $this, 'apply_cleanout' ) ); 	// Fires from registered event
+
 	}
 
 	/**
@@ -113,11 +124,13 @@ class Spam_Destroyer {
 	 * An extra input field, which is intentionally filled with garble, but will be replaced dynamically with JS later
 	 */
 	public function extra_input_field() {
+
 		echo '<input type="hidden" id="killer_value" name="killer_value" value="' . md5( rand( 0, 999 ) ) . '"/>';
 		echo '<noscript>' . __( 'Sorry, but you are required to use a javascript enabled brower to comment here.', 'spam-killer' ) . '</noscript>';
 
 		// Enqueue the payload - placed here so that it is ONLY used when on a page utilizing the plugin
 		$this->load_payload();
+
 	}
 
 	/**
@@ -237,8 +250,10 @@ class Spam_Destroyer {
 	 * them why their post will not appear.
 	 */
 	public function redirect_spam_commenters( $location ){
+
 		$newurl = substr( $location, 0, strpos( $location, "#comment" ) );
 		return add_query_arg( 'spammer', 'confirm', $newurl ) . '#reply-title';
+
 	}
 
 	/*
@@ -251,6 +266,7 @@ class Spam_Destroyer {
 
 		// Display notice
 		echo '<div id="comments-error-message"><p>' . __( 'Sorry, but our system has recognised you as a spammer. If you believe this to be an error, please contact us so that we can rectify the situation.', 'spam-destroyer' ) . '</p></div>';
+
 	}
 
 	/**
@@ -282,5 +298,68 @@ class Spam_Destroyer {
 
 	}
 
+	/**
+	 * Spam shall not darken our doorstep for long.
+	 * Put your house in order, death is on the way.
+	 * @author Brian Layman <plugins@thecodecave.com>
+	 * @since 2.4
+	 */
+	public function schedule_single_deletion_event() {
+
+		// error_log( "schedule_single_deletion_event " );
+		// Kick off an initial deletion
+		if ( !wp_next_scheduled( 'spam_destroyer_cleanout_single' ) ) {
+			// error_log( "!!! Spam Destroyer initiated " );
+			// error_log( "!!! Next event scheduled for now + " .  $this->first_deletion . " Seconds." );
+			wp_schedule_single_event( time() + $this->first_deletion , 'spam_destroyer_cleanout_single' ); // Start deleting after one minute
+		}
+
+	}
+
+	/**
+	 * Spam shall not darken our doorstep for long.
+	 * Put your house in order, death is on the way.
+	 * @author Brian Layman <plugins@thecodecave.com>
+	 * @since 2.4
+	 */
+	public function reg_spam_destroyer_cleanout() {
+
+		// error_log( "Registering next schedule_single_deletion_event" );
+		if ( !wp_next_scheduled( 'spam_destroyer_cleanout' ) ) {
+			// error_log( "Daily cleanout registered" );
+			wp_schedule_event( time(), 'daily', 'spam_destroyer_cleanout');
+		}
+
+	}
+
+	/**
+	 * Ask not for whom the bell tolls, 
+	 * it tolls for thee, Spam... 
+	 * This routine is intended to be called my the scheduled event.
+	 * @author Brian Layman <plugins@thecodecave.com>
+	 * @since 2.4
+	 */
+	public function apply_cleanout() {
+
+		// error_log( "Apply Cleanout Executing" );
+		// This routine is originally lifted from Akismet. Adjusted to limit the initial deletes.
+		global $wpdb;
+		$now_gmt = current_time( 'mysql', 1 );
+		$sql = "SELECT comment_id FROM $wpdb->comments WHERE DATE_SUB('$now_gmt', INTERVAL " . $this->spam_days . " DAY) > comment_date_gmt AND comment_approved = 'spam' limit 0,"  . $this->spam_delete_limit;
+		// error_log( $sql );
+		$comment_ids = $wpdb->get_col( $sql );
+		if ( empty( $comment_ids ) )
+			return;
+		$comma_comment_ids = implode( ', ', array_map('intval', $comment_ids) );
+		do_action( 'delete_comment', $comment_ids );
+		// error_log( "Deleted comments: " . count( $comment_ids ) );
+		if ( count( $comment_ids ) >= $this->spam_delete_limit ) $this->schedule_single_deletion_event();
+		$wpdb->query( "DELETE FROM $wpdb->comments WHERE comment_id IN ( $comma_comment_ids )" ); // Note these have passed throught intval
+		$wpdb->query( "DELETE FROM $wpdb->commentmeta WHERE comment_id IN ( $comma_comment_ids )" ); // Note these have passed throught intval
+		clean_comment_cache( $comment_ids );
+
+	}
+	
 }
+
 $spam_destroyer = new Spam_Destroyer();

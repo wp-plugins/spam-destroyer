@@ -1,9 +1,12 @@
 === Spam Destroyer ===
-Contributors: ryanhellyer, bjornjohansen, dimadin
+Contributors: ryanhellyer, bjornjohansen, dimadin, brianlayman
 Donate link: http://geek.ryanhellyer.net/products/spam-destroyer/
 Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate
 Requires at least: 3.5
-Stable tag: 1.3.2
+Tested up to: 3.9
+Stable tag: 1.4
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 Kills spam dead in it's tracks. Be gone evil demon spam!
 
@@ -30,6 +33,10 @@ Check out the FAQ on the <a href="http://geek.ryanhellyer.net/products/spam-dest
 
 == Changelog ==
 
+= 1.4 (21/3/2014) =
+* Now automatically deletes spam comments older than a set time (5 days)
+* Removed kill.php from trunk
+* Updated readme file for current WordPress Release 
 = 1.3.2 (24/6/2013) =
 * Fixed short cookie time bug thanks to Milan Dinić
 = 1.3.1 (18/3/2013) =
@@ -81,10 +88,9 @@ Check out the FAQ on the <a href="http://geek.ryanhellyer.net/products/spam-dest
 == Credits ==
 
 * <a href="http://ocaoimh.ie/">Donncha O Caoimh</a> - Developer of Cookies for Comments, functionality of which is incorporated into Spam Destroyer<br />
-* <a href="http://ocaoimh.ie/">Donncha O Caoimh</a> - Developer of Cookies for Comments, functionality of which is incorporated into Spam Destroyer<br />
 * <a href="http://elliottback.com/">Elliot Back</a> - Developer of WP Hashcash, functionality of which is incorporated into Spam Destroyer<br />
 * <a href="Marte Sollund and Ingvild Evje</a> - Bug reporting<br />
-* <a href="#">Brian Layman</a> - Code advice<br />
+* <a href="http://eHermitsInc.com/">Brian Layman</a> - Code advice<br />
 * <a href="http://ronalfy.com/">Ronald Huereca</a> - JS advice<br />
 * <a href="https://twitter.com/shawngaffney">Shawn Gaffney</a> - Bug reporting<br />
 * <a href="http://konstruktors.com/">Kaspars Dambis</a> - Bug reporting<br />
