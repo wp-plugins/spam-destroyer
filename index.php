@@ -2,9 +2,9 @@
 /*
 Plugin Name: Spam Destroyer
 Plugin URI: http://geek.ryanhellyer.net/products/spam-destroyer/
-Description: Kills spam dead in it's tracks
+Description: Kills spam dead in its tracks
 Author: Ryan Hellyer
-Version: 1.4.1
+Version: 1.4.2
 Author URI: http://geek.ryanhellyer.net/
 
 Copyright (c) 2014 Ryan Hellyer
@@ -31,8 +31,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 license.txt file included with this plugin for more information.
 
 */
-
-
 
 /**
  * Spam Destroyer class
@@ -183,7 +181,7 @@ class Spam_Destroyer {
 					$page_body = $response['body'];
 				}
 				else {
-					// BAM! Suck on that sploggers! Page doesn't exist, therefore kill the little bugger dead in it's tracks
+					// BAM! Suck on that sploggers! Page doesn't exist, therefore kill the little bugger dead in its tracks
 					$this->kill_spam_dead( $comment );
 				}
 
@@ -208,7 +206,7 @@ class Spam_Destroyer {
 			if ( isset( $_COOKIE[ $this->spam_key ] ) ) {
 				// If time not set correctly, then assume it's spam
 				if ( $_COOKIE[$this->spam_key] > 1 && ( ( time() - $_COOKIE[$this->spam_key] ) < $this->speed ) ) {
-					$this->kill_spam_dead( $comment ); // Something's up, since the commenters cookie time frame doesn't match ours
+					$this->kill_spam_dead( $comment ); // Something's up, since the commenter's cookie time frame doesn't match ours
 				}
 			} else {
 				$this->kill_spam_dead( $comment ); // Ohhhh! Cookie not set, so killing the little dick before it gets through!
@@ -222,17 +220,17 @@ class Spam_Destroyer {
 
 	/**
 	 * Kills splogger signups, BuddyPress posts and replies and bbPress spammers dead in their tracks
-	 * This method is an alternative to pouring kerosine on sploggers and lighting a match.
+	 * This method is an alternative to pouring kerosene on sploggers and lighting a match.
 	 * Checks both the cookie and input key payloads
 	 *
 	 * @author Ryan Hellyer <ryanhellyer@gmail.com>
 	 * @since 1.0
 	 */
-	public function check_for_post_evilness( $result ) {
+	public function check_for_post_evilness( $content ) {
 
 		// If the user is logged in, then they're clearly trusted, so continue without checking
 		if ( is_user_logged_in() )
-			return $comment;
+			return $content;
 
 		// Check the hidden input field against the key
 		if ( $_POST['killer_value'] != $this->spam_key ) {
@@ -241,7 +239,7 @@ class Spam_Destroyer {
 				bbp_add_error('bbp_reply_content', __('Sorry, but you have been detected as spam', 'spam-destroyer' ) );
 			}
 			else {
-				$result['errors']->add( 'blogname', '' );
+				$content['errors']->add( 'blogname', '' );
 			}
 		}
 
@@ -249,14 +247,14 @@ class Spam_Destroyer {
 		if ( isset( $_COOKIE[ $this->spam_key ] ) ) {
 			// If time not set correctly, then assume it's spam
 			if ( $_COOKIE[$this->spam_key] > 1 && ( ( time() - $_COOKIE[$this->spam_key] ) < $this->speed ) ) {
-				// Something's up, since the commenters cookie time frame doesn't match ours
-			$result['errors']->add( 'blogname', '' );
+				// Something's up, since the commenter's cookie time frame doesn't match ours
+			$content['errors']->add( 'blogname', '' );
 			}
 		} else {
 			// Cookie not set therefore destroy the evil splogger
-			$result['errors']->add( 'blogname', '' );
+			$content['errors']->add( 'blogname', '' );
 		}
-		return $result;
+		return $content;
 	}
 
 	/*
@@ -294,7 +292,7 @@ class Spam_Destroyer {
 
 	/**
 	 * Be gone evil demon spam!
-	 * Kill spam dead in it's tracks :)
+	 * Kill spam dead in its tracks :)
 	 * 
 	 * @author Ryan Hellyer <ryanhellyer@gmail.com>
 	 * @since 1.0

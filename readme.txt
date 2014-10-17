@@ -1,14 +1,14 @@
 === Spam Destroyer ===
 Contributors: ryanhellyer, bjornjohansen, dimadin, brianlayman
 Donate link: http://geek.ryanhellyer.net/products/spam-destroyer/
-Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate
+Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate, register, registeration, registerat
 Requires at least: 3.5
-Tested up to: 3.9
-Stable tag: 1.4.1
+Tested up to: 4.0
+Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Kills spam dead in it's tracks. Be gone evil demon spam!
+Kills spam dead in its tracks. Be gone evil demon spam!
 
 == Description ==
 
@@ -23,7 +23,7 @@ Simply install and activate the plugin. No settings necessary.
 
 For more information, visit the <a href="http://geek.ryanhellyer.net/products/spam-destroyer/">Spam Destroyer plugin page</a>.
 
-<small>Note: Spam Destroyer apparently does not work in conjunction with the Jetpack plugin. That plugin has a nasty way of handling it's commenting system which requires you to connect to an external service and will not work if your installation is not connected to the internet (which is the case for all my development sites) and as such this problem will not be fixed any time soon. If the Jetpack team fix these major problems I will happily make the plugin compatible with it, but in the mean time I suggest avoiding the Jetpack plugin.</small>
+<small>Note: Spam Destroyer apparently does not work in conjunction with the Jetpack plugin. That plugin has a nasty way of handling its commenting system which requires you to connect to an external service. This will not work if your installation is not connected to the internet (which is the case for all my development sites). As such, this problem will not be fixed any time soon. If the Jetpack team fixes these major problems I will happily make the plugin compatible with it. In the meantime, I suggest avoiding the Jetpack plugin.</small>
 
 
 == Frequently Asked Questions ==
@@ -33,6 +33,10 @@ Check out the FAQ on the <a href="http://geek.ryanhellyer.net/products/spam-dest
 
 == Changelog ==
 
+= 1.4.2 (17/10/2014) =
+* Fixed a bug in the spam checking that (I think) would have cleared the content of bbpress posts for logged in users
+* Fixed various spellling errors and grammar wrongs
+* Updated version compatibility
 = 1.4.1 (19/4/2014) =
 * Cleaning up PHPDocs
 = 1.4 (21/3/2014) =
@@ -51,7 +55,7 @@ Check out the FAQ on the <a href="http://geek.ryanhellyer.net/products/spam-dest
 = 1.2.5 (19/8/2012) =
 * Changed from kill.php file to kill.js file
 * Allows for caching of payload
-* Allows for automatic script concatentation
+* Allows for automatic script concatenation
 * Cookie creation achieved via raw JS
 * Key is passed to script via wp_localize_script()
 = 1.2.4 (11/8/2012) =
