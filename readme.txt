@@ -3,10 +3,11 @@ Contributors: ryanhellyer, bjornjohansen, dimadin, brianlayman
 Donate link: http://geek.ryanhellyer.net/products/spam-destroyer/
 Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate, register, registeration, registerat
 Requires at least: 3.5
-Tested up to: 4.0
-Stable tag: 1.4.2
+Tested up to: 4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: spam-killer
 
 Kills spam dead in its tracks. Be gone evil demon spam!
 
@@ -33,6 +34,9 @@ Check out the FAQ on the <a href="http://geek.ryanhellyer.net/products/spam-dest
 
 == Changelog ==
 
+= 1.4.3 (21/12/2014) =
+* Support for WordPress 4.1+ added.
+* Added translation string specification in header.
 = 1.4.2 (17/10/2014) =
 * Fixed a bug in the spam checking that (I think) would have cleared the content of bbpress posts for logged in users
 * Fixed various spellling errors and grammar wrongs
