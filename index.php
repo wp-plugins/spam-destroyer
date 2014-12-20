@@ -8,7 +8,7 @@ Version: 1.4.3
 Author URI: https://geek.hellyer.kiwi/
 Text Domain: spam-killer
 
-Copyright (c) 2014 Ryan Hellyer
+Copyright (c) 2012 - 2015 Ryan Hellyer
 
 
 Based on the following plugins ...
