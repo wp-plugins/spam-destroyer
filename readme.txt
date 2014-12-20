@@ -1,7 +1,7 @@
 === Spam Destroyer ===
 Contributors: ryanhellyer, bjornjohansen, dimadin, brianlayman
-Donate link: http://geek.ryanhellyer.net/products/spam-destroyer/
-Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate, register, registeration, registerat
+Donate link: https://geek.hellyer.kiwi/products/spam-destroyer/
+Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate, register, registeration
 Requires at least: 3.5
 Tested up to: 4.2
 Stable tag: 1.4.3
@@ -13,23 +13,23 @@ Kills spam dead in its tracks. Be gone evil demon spam!
 
 == Description ==
 
-Stops automated spam while remaining as unobtrusive as possible to regular commenters. <a href="http://geek.ryanhellyer.net/products/spam-destroyer/">The Spam Destroyer plugin</a> is intended to be effortless to use, simply install
+Stops automated spam while remaining as unobtrusive as possible to regular commenters. <a href="https://geek.hellyer.kiwi/products/spam-destroyer/">The Spam Destroyer plugin</a> is intended to be effortless to use, simply install
 and enjoy a spam free website :)
 
-<small>This plugin does not currently work very well for user registrations, bbPress or BuddyPress. We are looking for someone to assist with ensuring this works well in future, so if you would like to help you then please <a href="http://geek.ryanhellyer.net/contact/">get in touch</a>.</small>
+<small>This plugin does not currently work very well for user registrations, bbPress or BuddyPress. We are looking for someone to assist with ensuring this works well in future, so if you would like to help you then please <a href="https://geek.hellyer.kiwi/contact/">get in touch</a>.</small>
 
 == Installation ==
 
 Simply install and activate the plugin. No settings necessary.
 
-For more information, visit the <a href="http://geek.ryanhellyer.net/products/spam-destroyer/">Spam Destroyer plugin page</a>.
+For more information, visit the <a href="https://geek.hellyer.kiwi/products/spam-destroyer/">Spam Destroyer plugin page</a>.
 
 <small>Note: Spam Destroyer apparently does not work in conjunction with the Jetpack plugin. That plugin has a nasty way of handling its commenting system which requires you to connect to an external service. This will not work if your installation is not connected to the internet (which is the case for all my development sites). As such, this problem will not be fixed any time soon. If the Jetpack team fixes these major problems I will happily make the plugin compatible with it. In the meantime, I suggest avoiding the Jetpack plugin.</small>
 
 
 == Frequently Asked Questions ==
 
-Check out the FAQ on the <a href="http://geek.ryanhellyer.net/products/spam-destroyer/">Spam Destroyer plugin</a> page.
+Check out the FAQ on the <a href="https://geek.hellyer.kiwi/products/spam-destroyer/">Spam Destroyer plugin</a> page.
 
 
 == Changelog ==
@@ -92,7 +92,7 @@ Check out the FAQ on the <a href="http://geek.ryanhellyer.net/products/spam-dest
 = 1.0 (29/7/2012) =
 * Initial release
 
-<small>Any beta/alpha versions to be released in future, will be posted for download on the <a href="http://geek.ryanhellyer.net/products/spam-destroyer/">Spam Destroyer plugin page</a>.</small>
+<small>Any beta/alpha versions to be released in future, will be posted for download on the <a href="https://geek.hellyer.kiwi/products/spam-destroyer/">Spam Destroyer plugin page</a>.</small>
 
 
 == Credits ==

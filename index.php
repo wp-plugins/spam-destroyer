@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: Spam Destroyer
-Plugin URI: http://geek.ryanhellyer.net/products/spam-destroyer/
+Plugin URI: https://geek.hellyer.kiwi/products/spam-destroyer/
 Description: Kills spam dead in its tracks
 Author: Ryan Hellyer
 Version: 1.4.3
-Author URI: http://geek.ryanhellyer.net/
+Author URI: https://geek.hellyer.kiwi/
 Text Domain: spam-killer
 
 Copyright (c) 2014 Ryan Hellyer
