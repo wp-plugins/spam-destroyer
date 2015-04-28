@@ -3,7 +3,7 @@ Contributors: ryanhellyer, bjornjohansen, dimadin, brianlayman
 Donate link: https://geek.hellyer.kiwi/products/spam-destroyer/
 Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate, register, registeration
 Requires at least: 3.5
-Tested up to: 4.2
+Tested up to: 4.3
 Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
