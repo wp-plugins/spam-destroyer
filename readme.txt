@@ -5,9 +5,9 @@ Tags: spam, anti-spam, antispam, buddypress, bbpress, kill, destroy, eliminate, 
 Requires at least: 3.5
 Tested up to: 4.3
 Stable tag: 1.4.3
+Text Domain: spam-killer
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
-Text Domain: spam-killer
 
 Kills spam dead in its tracks. Be gone evil demon spam!
 
@@ -16,7 +16,7 @@ Kills spam dead in its tracks. Be gone evil demon spam!
 Stops automated spam while remaining as unobtrusive as possible to regular commenters. <a href="https://geek.hellyer.kiwi/products/spam-destroyer/">The Spam Destroyer plugin</a> is intended to be effortless to use, simply install
 and enjoy a spam free website :)
 
-<small>This plugin does not currently work very well for user registrations, bbPress or BuddyPress. We are looking for someone to assist with ensuring this works well in future, so if you would like to help you then please <a href="https://geek.hellyer.kiwi/contact/">get in touch</a>.</small>
+A beta version of this plugin is now available for testing purposes. We would love you to <a href="https://geek.hellyer.kiwi/2015/08/01/anti-spam-captcha/">try it out</a>.
 
 == Installation ==
 
